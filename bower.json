@@ -1,0 +1,9 @@
+{
+  "name": "Minesweeper",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "requirejs": "~2.1.18",
+    "q": "~2.0.2"
+  }
+}

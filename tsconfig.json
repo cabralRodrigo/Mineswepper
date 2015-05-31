@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"module": "amd",
+		"target": "ES5",
+		"watch": true,
+		"outDir": "src/js/mine"
+	}
+}
