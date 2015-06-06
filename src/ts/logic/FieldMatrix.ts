@@ -8,7 +8,7 @@ class FieldMatrix {
 		this.matrix = {};
 	}
 	
-	public setFieldOn(x: number, y: number, cell: Cell): void {
+	public setCellAt(x: number, y: number, cell: Cell): void {
 		this.matrix[x] = this.matrix[x] || {};
 		this.matrix[x][y] = cell;
 	}

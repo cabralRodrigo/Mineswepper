@@ -62,7 +62,7 @@ class Field {
 	}
 	
 	public setCell(x: number, y: number, cell: Cell): boolean {
-		this.fieldMatrix.setFieldOn(x, y, cell);
+		this.fieldMatrix.setCellAt(x, y, cell);
 		
 		return true;
 	}
@@ -82,7 +82,7 @@ class Field {
 		
 		for (var xi = -1; xi <= 1; xi ++)
 			for (var yi = -1; yi <= 1; yi ++)
-				if (!(x === xi && y === yi)) {
+				if (x !== xi && y !== yi && !this.fieldMatrix.getCellAt(xi, yi).getIsBomb()) {
 					var cell = this.getCellAt(x + xi, y + yi);
 					if (cell)
 						count += (cell.getIsBomb() ? 1 : 0);		

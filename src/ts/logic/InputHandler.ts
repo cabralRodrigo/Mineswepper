@@ -3,7 +3,7 @@ import {Field, Cell, FieldMatrix, CellState, GameSetting} from './logic'
 class InputHandler {
 	constructor(canvas: HTMLCanvasElement, field: Field, private setting: GameSetting) {
 		canvas.onmousedown = e => {
-			debugger;
+			
 			
 			if (e.button == 2 && e.shiftKey)
 				return;

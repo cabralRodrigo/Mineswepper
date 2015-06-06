@@ -22,7 +22,7 @@ class CellRenderer {
 			
 		img.onload = () => {		
 			this.ctx.drawImage(img, x * xSize, y * ySize, xSize, ySize);
-			if (cell.getState() == CellState.Clicked && !cell.getIsBomb()) {
+			if (cell.getState() == CellState.Clicked && !cell.getIsBomb() && cell.getBombCount() > 0) {
 				this.ctx.fillStyle = this.colors[cell.getBombCount()];
 				this.ctx.strokeStyle = "black";
 				this.ctx.font = "25px Arial";
