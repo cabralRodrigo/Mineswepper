@@ -7,6 +7,11 @@ class Minesweeper {
 	private inputHandler: InputHandler;
 	private canvas: HTMLCanvasElement;
 	
+	/**
+	 * Creates an new instance of the Minesweeper class (or game, haha)
+	 * @param canvasId The canvas id to render the game
+	 * @param setting The setting to create the game
+	 */
 	constructor(canvasId: string, private setting: GameSetting) {
 		this.canvas = <HTMLCanvasElement>document.getElementById(canvasId);
 		this.field = new Field(setting);
@@ -17,6 +22,9 @@ class Minesweeper {
 		this.field.onCellChange = (x, y) => this.renderer.renderAt(this.field, x, y);
 	}
 	
+	/**
+	 * Generate the field of the game
+	 */
 	private generateField(): void {
 		for (var x = 0; x < this.field.getXCellCount(); x++)
 			for (var y = 0; y < this.field.getYCellCount(); y++) {
@@ -27,6 +35,9 @@ class Minesweeper {
 		this.field.generateBombCount();
 	}
 	
+	/**
+	 * Updates the game
+	 */
 	public update(): void {
 		this.renderer.render(this.field);
 	}

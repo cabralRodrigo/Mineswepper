@@ -11,19 +11,19 @@ class GameRenderer {
 	}
 		
 	public render(field: Field): void {
-		this.canvas.height = field.getYCellCount() * this.setting.yCell;
-		this.canvas.width = field.getXCellCount() * this.setting.xCell;
+		this.canvas.height = field.getYCellCount() * this.setting.cellHeight;
+		this.canvas.width = field.getXCellCount() * this.setting.cellWidth;
 		
 		this.ctx.fillStyle = "white";
-		this.ctx.fillRect(0, 0, field.getXCellCount() * this.setting.xCell, field.getYCellCount() * this.setting.yCell);	
+		this.ctx.fillRect(0, 0, field.getXCellCount() * this.setting.cellWidth, field.getYCellCount() * this.setting.cellHeight);	
 		 
-		field.forEachField((x, y, cell) => this.cellRenderer.render(x, y, cell));
+		field.forEachField((x, y, cell) => this.cellRenderer.renderCell(x, y, cell));
 	}
 	
 	public renderAt(field: Field, x: number, y: number) {
 		var cell = field.getCellAt(x, y);
 		if (cell)
-			this.cellRenderer.render(x, y, cell);
+			this.cellRenderer.renderCell(x, y, cell);
 	}
 }
 

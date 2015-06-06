@@ -1,9 +1,13 @@
 import {Cell, CellState, GameSetting} from './../logic/logic'
-import {Q} from './../libs/lib'
 
 class CellRenderer {
 	private colors: {[count: number] : string} = [];
 	
+	/**
+	 * Creates an new instance of the CellRenderer class
+	 * @param ctx The context 2D of a canvas to render the cells
+	 * @param setting The settings of the current game 
+	 */
 	constructor(private ctx: CanvasRenderingContext2D, private setting: GameSetting) {
 		this.colors[0] = "black";
 		this.colors[1] = "blue";
@@ -16,10 +20,18 @@ class CellRenderer {
 		this.colors[8] = "black";
 	}
 	
-	render(x: number, y: number, cell: Cell): void {
-		var xSize = this.setting.xCell, ySize = this.setting.yCell;	
-		var img = this.getImageFromCell(cell);	
+	/**
+	 * Renders a cell
+	 * @param x The index of the cell to render on the X axis
+	 * @param y The index of the cell to render on the Y axis
+	 * @param cell The cell to render
+	 */
+	public renderCell(x: number, y: number, cell: Cell): void {
+		var xSize = this.setting.cellWidth, ySize = this.setting.cellHeight;	
+		var img = this.getTexture(cell);	
 			
+		
+		//TODO: Stop load the image on each render cycle
 		img.onload = () => {		
 			this.ctx.drawImage(img, x * xSize, y * ySize, xSize, ySize);
 			if (cell.getState() == CellState.Clicked && !cell.getIsBomb() && cell.getBombCount() > 0) {
@@ -33,7 +45,11 @@ class CellRenderer {
 		};
 	}
 	
-	private getImageFromCell(cell: Cell) : HTMLImageElement {
+	/**
+	 * Gets a texture for a cell
+	 * @param cell The cell to get the texture
+	 */
+	private getTexture(cell: Cell) : HTMLImageElement {
 		
 		var img = new Image();
 		var state = cell.getState();
@@ -49,37 +65,6 @@ class CellRenderer {
 				img.src = './../assets/cell_clicked.png';
 		}
 		
-		
-		//if (cell.getIsBomb())
-		//	img.src = './../assets/cell_mine.png';
-		
-		return img;
-		
-
-		var state = cell.getState();
-		if (state == CellState.Hidden)
-			return CellRenderer.cell_base;
-		else if (state == CellState.Flaged)
-			return CellRenderer.cell_flag;
-		else if (state == CellState.Clicked) {
-			if (cell.getIsBomb())
-				return CellRenderer.cell_mine;
-			else
-				return CellRenderer.cell_clicked;
-		}
-		
-		
-	}
-	
-	private static cell_base: HTMLImageElement = CellRenderer.loadImage('cell_base');
-	private static cell_flag: HTMLImageElement = CellRenderer.loadImage('cell_flag');
-	private static cell_mine: HTMLImageElement = CellRenderer.loadImage('cell_mine');
-	private static cell_clicked: HTMLImageElement = CellRenderer.loadImage('cell_clicked');
-	
-	
-	private static loadImage(fileName: string): HTMLImageElement {
-		var img = new Image();
-		img.src = `./../assets/${fileName}.png`;
 		return img;
 	}
 }
