@@ -63,8 +63,11 @@ class Field {
 			if (cell.getBombCount() == 0 && cell.getState() == CellState.Clicked && !placeFlag)				
 				for (var xi = -1; xi <= 1; xi++) 
 					for (var yi = -1; yi <= 1; yi++)
-						if (!(xi === x && yi === y))
-							this.onCellClick(xi + x, yi + y, false);
+						if (xi !== x && yi !== y) {
+							let cell = this.getCellAt(xi + x, yi + y);
+							if (cell && !cell.getIsBomb())
+								this.onCellClick(xi + x, yi + y, false);
+						}
 									
 		}
 	}
