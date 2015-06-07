@@ -1,14 +1,49 @@
-import {Cell, FieldMatrix, GameSetting, CellState} from './logic'
+import {Cell, GameSetting, CellState} from './logic'
+
+class Matrix2D<T> {
+	private matrix: {[x: number]: {[y: number]: T}};
+	
+	/**
+	 * Creates an new instance of the Matrix2D class
+	 */
+	constructor() {
+		this.matrix = {};
+	}
+	
+	/**
+	 * Sets an item on the matrix
+	 * @param x The index of the item on the X axis
+	 * @param y The index of the item on the Y axis
+	 * @param item The item to be setted on the matrix
+	 */
+	public setItem(x: number, y: number, item: T): void {
+		this.matrix[x] = this.matrix[x] || {};
+		this.matrix[x][y] = item;
+	}
+	
+	/**
+	 * Gets an item on the matrix
+	 * @param x The index of the item on the X axis
+	 * @param y The index of the item on the Y axis
+	 * @returns The item if it exists on the matrix, undefined if the item does not exists 
+	 */
+	public getItem(x: number, y: number): T {
+		if (this.matrix[x])
+			return this.matrix[x][y];
+		else
+			return void 0;
+	}
+}
 
 class Field {
-	private fieldMatrix: FieldMatrix;
+	private matrix: Matrix2D<Cell>;
 	
 	/**
 	 * Creates an new instance of the Field class
 	 * @param settings The game settings for create the field
 	 */
 	constructor(private settings: GameSetting) {
-		this.fieldMatrix = new FieldMatrix(settings.xSize, settings.ySize);
+		this.matrix = new Matrix2D<Cell>();
 	}
 	
 	/**
@@ -95,7 +130,7 @@ class Field {
 	 * @param cell The cell to set on the field
 	 */
 	public setCell(x: number, y: number, cell: Cell): void {
-		this.fieldMatrix.setCellAt(x, y, cell);
+		this.matrix.setItem(x, y, cell);
 	}
 	
 	/**
@@ -105,7 +140,7 @@ class Field {
 	public forEachField(action: (x: number, y: number, cell: Cell) => void): void {
 		for (var x = 0; x < this.getXCellCount(); x++)
 			for (var y = 0; y < this.getYCellCount(); y++)
-				action(x, y, this.fieldMatrix.getCellAt(x, y));		
+				action(x, y, this.matrix.getItem(x, y));		
 	}
 	
 	/**
@@ -115,7 +150,7 @@ class Field {
 	 * @returns The cell if it exists on the field, undefined if the cell does not exists
 	 */
 	public getCellAt(x: number, y: number): Cell {
-		return this.fieldMatrix.getCellAt(x, y);
+		return this.matrix.getItem(x, y);
 	}
 	
 	/**
